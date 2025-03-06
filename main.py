@@ -1,8 +1,11 @@
+import random
+
 import telebot
+import random
 from telebot import types
 from conf import TOKEN
 from questions import questions
-
+from stickers import greet
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -14,6 +17,8 @@ def start(message: types.Message):
     text = ('Добро пожаловать в Telegram бот Московского зоопарка!'
             ' Здесь вы можете узнать больше о нас и пройти увлекательную викторину! 🐘')
     help_text = 'Чтобы узнать, что я могу, отправьте команду /help'
+    sticker_index = random.randint(0,3)
+    bot.send_sticker(message.chat.id, sticker= greet[sticker_index])
     bot.send_message(message.chat.id, text=text)
     bot.send_message(message.chat.id, text=help_text)
 
@@ -105,6 +110,18 @@ def check_answer(message: types.Message, question_index):
         bot.send_message(chat_id, f"Неправильно. Правильный ответ: {correct_answer}")
 
     send_question(chat_id, question_index + 1)
+
+
+@bot.message_handler(content_types=['sticker'])
+def handle_sticker(message: types.Message):
+    # Получаем file_id стикера
+    sticker_file_id = message.sticker.file_id
+    print(f"Sticker file_id: {sticker_file_id}")
+
+    # Отправляем file_id обратно пользователю
+    bot.reply_to(message, f"File_id этого стикера: {sticker_file_id}")
+
+
 
 
 if __name__ == "__main__":
