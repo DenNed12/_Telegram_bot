@@ -5,7 +5,7 @@ import random
 from telebot import types
 from conf import TOKEN
 from questions import questions
-from stickers import greet
+from stickers import *
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -91,6 +91,46 @@ def send_question(chat_id, question_index):
         bot.register_next_step_handler_by_chat_id(chat_id, lambda message: check_answer(message, question_index))
     else:
         bot.send_message(chat_id, f"Викторина завершена! Ваш счет: {user_points[chat_id]}")
+
+
+        if user_points[chat_id] == 1:
+            bot.send_message(chat_id, 'Мы подобрали для вас животное! Ваше животное в подарок от зоопарка')
+            bot.send_sticker(chat_id,mouse)
+            bot.send_message(chat_id,'Чтобы узнать подробнее про нашу программу опеки '
+                                     'животных пройдите в нашу группу вконтаке')
+        elif user_points[chat_id] == 2:
+            bot.send_message(chat_id, 'Мы подобрали для вас животное! Ваше животное в подарок от зоопарка')
+            bot.send_sticker(chat_id,cat)
+            bot.send_message(chat_id,'Чтобы узнать подробнее про нашу программу опеки '
+                                     'животных пройдите в нашу группу вконтаке')
+
+        elif user_points[chat_id] == 3:
+            bot.send_message(chat_id, 'Мы подобрали для вас животное! Ваще животное в подарок от зоопарка')
+            bot.send_sticker(chat_id,dog)
+            bot.send_message(chat_id,'Чтобы узнать подробнее про нашу программу опеки '
+                                     'животных пройдите в нашу группу вконтаке')
+
+        elif user_points[chat_id] == 4:
+            bot.send_message(chat_id, 'Мы подобрали для вас животное! Ваше животное в подарок от зоопарка')
+            bot.send_sticker(chat_id,jag)
+            bot.send_message(chat_id,'Чтобы узнать подробнее про нашу программу опеки '
+                                     'животных пройдите в нашу группу вконтаке')
+
+
+        elif user_points[chat_id] == 5 or user_points[chat_id] == 6:
+            bot.send_message(chat_id, 'Мы подобрали для вас животное! Ваiе животное в подарок от зоопарка')
+            bot.send_sticker(chat_id,bear)
+            bot.send_message(chat_id,'Чтобы узнать подробнее про нашу программу опеки '
+                                     'животных пройдите в нашу группу вконтаке')
+
+        elif user_points[chat_id] == 7 or user_points[chat_id] == 8:
+            bot.send_message(chat_id, 'Мы подобрали для вас животное! Ваше животное в подарок от зоопарка')
+            bot.send_sticker(chat_id,seal)
+            bot.send_message(chat_id,'Чтобы узнать подробнее про нашу программу опеки '
+                                     'животных пройдите в нашу группу вконтаке')
+        else:
+            bot.send_message(chat_id, 'Ошибка')
+
         del user_points[chat_id]
         mark = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
         agree = types.KeyboardButton("Да")
